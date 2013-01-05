@@ -10,13 +10,14 @@ var ytcaptiondler = {
   },
 
 	DownloadCaption : function(event) {
-	   
+	    //dump("DownloadCaption load OK\n");
 		var doc = event.originalTarget;
 		var loc = doc.location;			
 		var u = doc.location.toString();
+		//dump("location=" +u+ "\n");
 		if (loc.href.match(/http:\/\/www(|[0-9])\.(|l\.)youtube\..*\/.*/i)) {
 			doc.videoID = ytcaptiondler.getQuery(doc, "v");
-			var watchCaptions = doc.getElementById("watch-transcript");
+			var watchCaptions = doc.getElementById("watch-actions-transcript");
 			if(doc.videoID != null && watchCaptions != null) {
 				ytcaptiondler.addCaptionDownloadLinks(doc);
 			}
@@ -48,23 +49,27 @@ var ytcaptiondler = {
 			var downloadLinks = doc.createElement("div");
 			downloadLinks.setAttribute("id", "caption-download");
 			downloadLinks.style.cssFloat = "right";
-			downloadLinks.style.paddingRight="22px;";
-
+			downloadLinks.style.paddingTop = "8px";
+			
 			downloadLinks.appendChild(ytcaptiondler.setLanguageChoice(doc));
 			downloadLinks.appendChild(ytcaptiondler.setCaptionDownloadButton(doc));
 			
-			var watchViewsDiv	= doc.getElementById("watch-actions");
-			watchViewsDiv.appendChild(downloadLinks);
+			var watchViewsDiv	= doc.getElementById("watch7-action-buttons");
+			watchViewsDiv.parentNode.insertBefore(downloadLinks, watchViewsDiv.nextSibling);
+			
+			var clearfix = doc.createElement("div");
+			clearfix.setAttribute("class", "clearfix");
+			watchViewsDiv.parentNode.insertBefore(clearfix, downloadLinks.nextSibling);
 		}		
 	},
 	setLanguageChoice : function(doc) {
 		var select = doc.createElement("select");
 		select.setAttribute("id", "caption-language-select");
-		select.style.width = "100px";
+		select.style.width = "200px";
 		var trackUrl = ytcaptiondler.getTrackURL(doc.videoID);
 		
 		ytcaptiondler.doXHR(trackUrl, function(text) {
-			var myRe = /<track [^<]*name="([^<]*)" [^<]*lang_code="([a-z]+)" [^<]*lang_translated="([a-zA-Z]+)"/g;
+			var myRe = /<track [^<]*name="([^<]*)" [^<]*lang_code="([^"]+)" [^<]*lang_translated="([^"]+)"/g;
 			var myArray;
 			var content = "";
 			var count = 1;
@@ -86,7 +91,7 @@ var ytcaptiondler = {
 	
 	setCaptionDownloadButton : function(doc) {
 		var button = doc.createElement("button");
-		button.className = "yt-uix-tooltip-reverse yt-uix-button yt-uix-tooltip yt-uix-button-empty";
+		button.className = "action-panel-trigger yt-uix-button yt-uix-button-hh-text yt-uix-tooltip yt-uix-button-empty";
 		button.title = "Download close caption";
 		button.style.marginLeft = "4px";
 		
