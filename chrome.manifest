@@ -1,0 +1,5 @@
+content   ytcaptiondler   chrome/content/
+content   ytcaptiondler   chrome/content/ contentaccessible=yes
+locale    ytcaptiondler   en-US         chrome/locale/en-US/
+
+overlay   chrome://browser/content/browser.xul   chrome://ytcaptiondler/content/captiondownloader_overlay.xul

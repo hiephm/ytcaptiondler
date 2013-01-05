@@ -1,0 +1,25 @@
+Get list of track:
+http://www.youtube.com/api/timedtext?type=list&v=[VIDEO ID]
+
+Response:
+<?xml version="1.0" encoding="utf-8" ?>
+<transcript_list docid="8553727898314853147">
+	<track id="1" name="" lang_code="en" lang_original="English" lang_translated="English" lang_default="true"/>
+	<track id="2" name="Transcript test" lang_code="en" lang_original="English" lang_translated="English"/>
+	<track id="0" name="" lang_code="de" lang_original="Deutsch" lang_translated="German"/>
+</transcript_list>
+
+===========================
+Get content of track:
+http://www.youtube.com/api/timedtext?type=track&v=[VIDEO ID]&lang=[lang_code]
+
+Response:
+<?xml version="1.0" encoding="utf-8" ?>
+<transcript>
+	<text start="1" dur="1">Hello</text>
+	<text start="2.073" dur="5.156">In this video I will show you how to download the
+closed-captions (or subtitles) from a YouTube video.</text>
+	<text start="7.654" dur="4.791">This can be quite useful if you want to watch a video
+with its closed captions on a portable media player</text>
+	<text start="12.56" dur="3.693">such as a mobile phone, Zune, iPod Touch, etc.</text>
+</transcript>
